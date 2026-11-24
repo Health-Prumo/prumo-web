@@ -78,6 +78,8 @@ export interface PontoHistorico {
   energia: number;
   sono_horas: number;
   atividade_minutos: number;
+  /** Minutos que contam para a meta da OMS (vigorosa vale 2, leve não conta). */
+  atividade_meta_min: number;
   agua_litros: number;
   alimentacao_nota: number;
   humor: number;

@@ -458,11 +458,6 @@ button:disabled {
   line-height: 1.55;
   color: rgba(246, 241, 231, 0.9);
 }
-.fonte-mock {
-  margin-top: 8px;
-  font-size: 11.5px !important;
-  color: var(--cor-menta-claro) !important;
-}
 .medidor {
   position: relative;
   flex: none;
@@ -541,7 +536,7 @@ button:disabled {
 .habitos {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 .habito {
@@ -599,6 +594,293 @@ button:disabled {
 .referencia {
   font-size: 12px;
   color: var(--texto-suave);
+}
+
+/* ---------- Hoje: painel ---------- */
+.sequencia {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 4px 10px 4px 6px;
+  border-radius: 99px;
+  background: var(--verde-100);
+  color: var(--verde-800);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.sequencia .icone {
+  width: 16px;
+  height: 16px;
+}
+.painel {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+}
+.painel > * {
+  min-width: 0;
+}
+.card-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.card-cabecalho .link-seta {
+  margin-left: auto;
+}
+.card-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.link-seta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--verde-800);
+  text-decoration: none;
+}
+.link-seta .icone {
+  width: 16px;
+  height: 16px;
+}
+.link-seta:hover {
+  text-decoration: underline;
+}
+
+/* análise: medidor, comparação com a média e sugestões dentro do card esmeralda */
+.resumo-medidor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+.comparativo {
+  font-size: 12px !important;
+  color: var(--cor-menta-claro) !important;
+  text-align: center;
+}
+.rotulo-sugestoes {
+  margin: 16px 0 8px;
+}
+.resumo .sugestoes {
+  list-style: none;
+}
+.resumo .sugestao {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(246, 241, 231, 0.07);
+  border: 1px solid rgba(168, 224, 196, 0.25);
+  color: var(--cor-marfim);
+}
+.resumo .sugestao span:not(.ic) {
+  display: block;
+  font-size: 13px;
+  color: rgba(246, 241, 231, 0.85);
+}
+.resumo .sugestao .ic {
+  background: rgba(127, 207, 168, 0.18);
+  color: var(--cor-menta);
+}
+
+/* meta da OMS com os 7 dias */
+.meta-semana .suave {
+  font-size: 13px;
+}
+.meta-falta {
+  font-size: 13px;
+  color: var(--texto-suave);
+  margin-bottom: 14px;
+}
+.meta-falta b {
+  color: var(--verde-800);
+}
+.dias-ativos {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  padding-bottom: 14px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--borda);
+}
+.dias-ativos li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--texto-suave);
+}
+.dias-ativos .bolinha {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--borda-controle);
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+.dias-ativos .ativo .bolinha {
+  background: var(--verde-800);
+  border-color: var(--verde-800);
+}
+.dias-ativos .bolinha .icone {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2.2;
+}
+.dias-ativos .hoje {
+  color: var(--verde-800);
+  font-weight: 700;
+}
+
+/* hábitos: ícone em pastilha, nota e média */
+.habito-ic {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--verde-100);
+  color: var(--verde-700);
+}
+.habito-ic .icone {
+  width: 18px;
+  height: 18px;
+}
+.habito-rodape {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--texto-apagado);
+}
+.nota-mini {
+  display: block;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--verde-100);
+  overflow: hidden;
+}
+.nota-mini > span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: var(--degrade-verde);
+}
+
+/* gráfico dos últimos 7 dias */
+.area-grafico,
+.resumo-semana,
+.coach-rapido {
+  padding: 20px;
+}
+.grafico-semana {
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+/* O gráfico ocupa exatamente o card: o SVG não empurra a largura no celular. */
+.grafico-semana > .recharts-responsive-container {
+  position: absolute;
+  inset: 0;
+}
+.legenda {
+  list-style: none;
+  display: flex;
+  gap: 14px;
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--texto-suave);
+}
+.legenda li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.legenda li::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.legenda-energia::before {
+  background: #46545a;
+}
+.legenda-sono::before {
+  border-radius: 3px !important;
+  background: #4e9e83;
+}
+
+/* resumo da semana */
+.resumo-semana ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 12px;
+}
+.resumo-semana li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.resumo-semana li > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.resumo-nome {
+  font-size: 11.5px;
+  color: var(--texto-suave);
+}
+.resumo-valor {
+  font-family: var(--fonte-titulo);
+  font-variant-numeric: lining-nums;
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--cor-esmeralda);
+}
+.resumo-texto-mini,
+.resumo-semana .selo {
+  font-size: 11px;
+  line-height: 1.3;
+}
+.resumo-texto-mini {
+  color: var(--texto-suave);
+}
+
+/* card do Coach na Hoje */
+.coach-rapido {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.coach-rapido .card-cabecalho {
+  margin-bottom: 0;
+}
+.coach-rapido .msgs {
+  gap: 8px;
+}
+.coach-rapido .msg {
+  max-width: 100%;
+}
+.coach-rapido .entrada {
+  margin-bottom: 0;
+}
+.coach-rapido .referencia {
+  font-size: 11px;
 }
 
 /* ---------- Registrar ---------- */
@@ -981,7 +1263,7 @@ button:disabled {
 /* ---------- tablet ---------- */
 @media (min-width: 640px) {
   .habitos {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   .sugestoes {
     grid-template-columns: 1fr 1fr;
@@ -1102,8 +1384,59 @@ button:disabled {
   .registrar {
     max-width: 720px;
   }
+  /* painel da Hoje em grade, como no mockup desktop */
+  .painel {
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    grid-template-areas:
+      'analise meta'
+      'habitos habitos'
+      'grafico coach'
+      'resumo coach';
+    align-items: start;
+  }
+  .area-analise {
+    grid-area: analise;
+    height: 100%;
+  }
+  .area-analise > .card {
+    height: 100%;
+  }
+  .area-meta {
+    grid-area: meta;
+    height: 100%;
+  }
+  .area-meta > .card {
+    height: 100%;
+  }
+  .area-habitos {
+    grid-area: habitos;
+  }
+  .area-grafico {
+    grid-area: grafico;
+  }
+  .area-resumo {
+    grid-area: resumo;
+  }
+  .area-coach {
+    grid-area: coach;
+    position: sticky;
+    top: 24px;
+  }
+  .resumo-semana ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grafico-semana {
+    height: 260px;
+  }
   .coach {
     max-width: 760px;
     min-height: calc(100dvh - 72px);
+  }
+}
+
+/* seis hábitos numa linha só em telas largas, como no mockup */
+@media (min-width: 1200px) {
+  .habitos {
+    grid-template-columns: repeat(6, 1fr);
   }
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import type { MensagemChat } from '../api/tipos';
 import { useAuth } from '../auth/AuthContext';
 import { Carregando, MensagemErro } from '../components/Estado';
@@ -22,6 +23,10 @@ export function Coach() {
   const [enviando, setEnviando] = useState(false);
   const [erro, setErro] = useState('');
   const fim = useRef<HTMLDivElement>(null);
+  const local = useLocation();
+  const navegar = useNavigate();
+  const perguntaInicial = (local.state as { pergunta?: string } | null)?.pergunta;
+  const jaPerguntou = useRef(false);
 
   useEffect(() => {
     let ativo = true;
@@ -63,6 +68,15 @@ export function Coach() {
     }
   }
 
+  // Pergunta feita no card do Coach da tela Hoje: envia uma vez, depois da conversa carregar.
+  useEffect(() => {
+    if (!perguntaInicial || mensagens === null || jaPerguntou.current) return;
+    jaPerguntou.current = true;
+    void navegar('.', { replace: true, state: null });
+    void enviar(perguntaInicial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [perguntaInicial, mensagens]);
+
   function aoEnviar(e: FormEvent) {
     e.preventDefault();
     void enviar(texto);
@@ -79,7 +93,7 @@ export function Coach() {
       </header>
       <p className="aviso-chat">
         O Coach Prumo não substitui orientação médica. Em caso de sintomas, procure um profissional
-        de saúde.
+        de saúde. As conversas se apagam sozinhas depois de 7 dias.
       </p>
 
       <div className="msgs" aria-live="polite" aria-busy={enviando}>
