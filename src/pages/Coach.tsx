@@ -4,7 +4,15 @@ import { useAuth } from '../auth/AuthContext';
 import { Carregando, MensagemErro } from '../components/Estado';
 import { Icone } from '../components/Icone';
 
-const ATALHOS = ['Como foi minha semana?', 'Dicas para dormir melhor', 'Lanches saudáveis'];
+// Perguntas do roteiro testado do Coach (ver o README do prumo-api).
+const ATALHOS = [
+  'Como foi minha semana?',
+  'Por que estou cansado?',
+  'Dicas para dormir melhor',
+  'Lanches saudáveis',
+  'Quanto falta para a meta da OMS?',
+  'Como minha nota é calculada?',
+];
 const LIMITE = 500;
 
 export function Coach() {
