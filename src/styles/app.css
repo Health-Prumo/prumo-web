@@ -228,6 +228,41 @@ button:disabled {
   font-size: 13.5px;
   font-weight: 500;
 }
+.campo-senha {
+  position: relative;
+  display: flex;
+}
+.campo-form .campo-senha input {
+  flex: 1;
+  min-width: 0;
+  padding-right: 104px;
+}
+.mostrar-senha {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--verde-800);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mostrar-senha:hover {
+  background: var(--verde-50);
+}
+.mostrar-senha .icone {
+  width: 18px;
+  height: 18px;
+}
 .campo-form input {
   padding: 12px 14px;
   border: 1px solid var(--borda-controle);

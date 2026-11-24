@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { MensagemErro } from '../components/Estado';
 import { Acesso } from './Acesso';
+import { CampoSenha } from '../components/CampoSenha';
 
 export function Cadastro() {
   const { sessao, modo, cadastrar, confirmar, reenviarCodigo, entrar } = useAuth();
@@ -118,21 +119,15 @@ export function Cadastro() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-        <label className="campo-form">
-          Senha
-          <input
-            type="password"
-            autoComplete="new-password"
-            required
-            minLength={8}
-            aria-describedby="dica-senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-          />
-          <span id="dica-senha" className="dica">
-            Mínimo de 8 caracteres, com letra maiúscula, minúscula e número.
-          </span>
-        </label>
+        <CampoSenha
+          rotulo="Senha"
+          autoComplete="new-password"
+          obrigatorio
+          minimo={8}
+          valor={senha}
+          aoMudar={setSenha}
+          dica="Mínimo de 8 caracteres, com letra maiúscula, minúscula e número."
+        />
         <p className="dica">Seu nome fica só no login e não é enviado à inteligência artificial.</p>
         {erro && <MensagemErro>{erro}</MensagemErro>}
         <button

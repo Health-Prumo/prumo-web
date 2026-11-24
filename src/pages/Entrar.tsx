@@ -3,6 +3,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { AvisoMedico, MensagemErro } from '../components/Estado';
 import { Acesso } from './Acesso';
+import { CampoSenha } from '../components/CampoSenha';
 
 export function Entrar() {
   const { sessao, entrar, modo } = useAuth();
@@ -66,16 +67,13 @@ export function Entrar() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </label>
-          <label className="campo-form">
-            Senha
-            <input
-              type="password"
-              autoComplete="current-password"
-              required
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-            />
-          </label>
+          <CampoSenha
+            rotulo="Senha"
+            autoComplete="current-password"
+            obrigatorio
+            valor={senha}
+            aoMudar={setSenha}
+          />
           {erro && <MensagemErro>{erro}</MensagemErro>}
           <button type="submit" className="botao largo" disabled={enviando || !email || !senha}>
             {enviando ? 'Entrando…' : 'Entrar'}

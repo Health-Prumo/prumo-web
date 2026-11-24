@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { MensagemErro } from '../components/Estado';
 import { Acesso } from './Acesso';
+import { CampoSenha } from '../components/CampoSenha';
 
 export function EsqueciSenha() {
   const { esqueciSenha, redefinirSenha } = useAuth();
@@ -65,15 +66,12 @@ export function EsqueciSenha() {
                 onChange={(e) => setCodigo(e.target.value)}
               />
             </label>
-            <label className="campo-form">
-              Nova senha
-              <input
-                type="password"
-                autoComplete="new-password"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-              />
-            </label>
+            <CampoSenha
+              rotulo="Nova senha"
+              autoComplete="new-password"
+              valor={senha}
+              aoMudar={setSenha}
+            />
           </>
         )}
         {erro && <MensagemErro>{erro}</MensagemErro>}
