@@ -6,7 +6,13 @@ Front-end do **Prumo**, o coach de bem-estar com IA que responde "como estou hoj
 
 ## Estado atual
 
-Repositório recém-criado, **ainda sem código**. A primeira tarefa é montar o projeto com a stack abaixo.
+Esqueleto funcional do Checkpoint 2, seguindo o contrato da API v1 (rotas e tipos em `src/api/tipos.ts` e `src/api/cliente.ts`):
+
+- Telas: entrar, cadastro com código, redefinir senha, consentimento LGPD, Hoje, Registrar o dia, Histórico (Recharts, carregado sob demanda), Coach e Perfil (exportar e apagar).
+- Login: `src/auth/` chama o Cognito direto por `fetch`, com renovação automática do token. Tokens só no `sessionStorage`. O header da API leva o **id token**. Com `VITE_AUTH_MODE=local`, não há Cognito e o token é `local-dev`.
+- Estilo: tokens copiados em `src/styles/prumo.css` (não edite as cores ali; mude no `prumo` e copie de novo) e o resto em `src/styles/app.css`. Ícones em `src/components/Icone.tsx`. Logo e símbolo em `public/`.
+- Qualidade: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`; o CI roda tudo isso e o `gitleaks`. Dependabot para npm e Actions.
+- Deploy: `scripts/deploy.sh` (S3 + invalidação do CloudFront) para `https://app.healthprumo.online`.
 
 ## Stack definida
 
@@ -19,12 +25,12 @@ Repositório recém-criado, **ainda sem código**. A primeira tarefa é montar o
 
 ## Telas do Checkpoint 2 (até 27/11/2026)
 
-| Tela | Referência visual no repositório `prumo` |
-|---|---|
-| Hoje: card "Seu dia" e resumo dos hábitos | `assets/mockups/desktop-hoje.png`, `assets/mockups/mobile-telas.png` |
-| Registrar o dia: sono, atividade, água, alimentação, humor e tela | `assets/mockups/mobile-telas.png` |
-| Coach IA (chat) | `assets/mockups/mobile-telas.png` |
-| Histórico e gráficos | ainda não desenhada |
+| Tela                                                              | Referência visual no repositório `prumo`                             |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Hoje: card "Seu dia" e resumo dos hábitos                         | `assets/mockups/desktop-hoje.png`, `assets/mockups/mobile-telas.png` |
+| Registrar o dia: sono, atividade, água, alimentação, humor e tela | `assets/mockups/mobile-telas.png`                                    |
+| Coach IA (chat)                                                   | `assets/mockups/mobile-telas.png`                                    |
+| Histórico e gráficos                                              | ainda não desenhada                                                  |
 
 O fluxo que precisa funcionar ao vivo: **login → registrar o dia → receber a análise → ver o histórico**.
 
