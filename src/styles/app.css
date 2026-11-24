@@ -185,13 +185,18 @@ button:disabled {
 .acesso {
   min-height: 100dvh;
   display: grid;
-  place-items: center;
-  padding: 24px 16px;
+  /* minmax(0, …): o card nunca fica mais largo que a tela (o campo de senha tem largura mínima grande). */
+  grid-template-columns: minmax(0, 440px);
+  justify-content: center;
+  align-items: center;
+  /* Margens seguras: no app Android a tela vai até atrás da barra de status e da de navegação. */
+  padding: calc(24px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right))
+    calc(24px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
   background: radial-gradient(900px 520px at 50% 0%, #1a5c49 0%, #0f4536 50%, #0b392e 100%);
 }
 .acesso-cartao {
   width: 100%;
-  max-width: 440px;
+  min-width: 0;
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
@@ -264,6 +269,7 @@ button:disabled {
   height: 18px;
 }
 .campo-form input {
+  min-width: 0;
   padding: 12px 14px;
   border: 1px solid var(--borda-controle);
   border-radius: 12px;
@@ -335,7 +341,8 @@ button:disabled {
   display: none;
 }
 .principal {
-  padding: 16px 16px 112px;
+  padding: calc(16px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right))
+    calc(112px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));
   max-width: 1180px;
   margin: 0 auto;
   outline: none;

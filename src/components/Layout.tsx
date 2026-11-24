@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { primeiroNome } from '../util/formato';
 import { AvisoMedico } from './Estado';
 import { Icone, type NomeIcone } from './Icone';
+import { definirIconesDaBarra } from '../util/barrasDoSistema';
 
 interface Item {
   para: string;
@@ -24,6 +26,9 @@ const ORDEM_DESKTOP = ['/', '/registrar', '/historico', '/coach', '/perfil'];
 export function Layout() {
   const { sessao } = useAuth();
   const nome = sessao?.nome || 'Você';
+
+  // Fundo claro: ícones escuros na barra de status do app.
+  useEffect(() => definirIconesDaBarra('escuro'), []);
 
   return (
     <div className="app">

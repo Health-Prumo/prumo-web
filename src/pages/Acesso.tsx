@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
+import { definirIconesDaBarra } from '../util/barrasDoSistema';
 
 /** Moldura das telas de entrada (sem menu). */
 export function Acesso({
@@ -10,6 +11,9 @@ export function Acesso({
   subtitulo?: string;
   children: ReactNode;
 }) {
+  // Fundo esmeralda: ícones claros na barra de status do app.
+  useEffect(() => definirIconesDaBarra('claro'), []);
+
   return (
     <div className="acesso">
       <main className="acesso-cartao card">
