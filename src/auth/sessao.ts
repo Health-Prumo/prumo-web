@@ -1,6 +1,8 @@
-// Sessão do usuário: tokens só no sessionStorage (somem ao fechar a aba).
+// Sessão do usuário: tokens no localStorage, para continuar logado ao reabrir o navegador ou o app.
+// Só tokens do Cognito ficam guardados (nenhum dado de saúde). Sair apaga tudo. Quando o refresh token
+// vence (validade no Cognito, hoje 30 dias), o usuário entra de novo.
 import { config, type ModoAuth } from '../config';
-import { criarCognito, type Cognito, type Tokens } from './cognito';
+import { criarCognito, ErroCognito, type Cognito, type Tokens } from './cognito';
 
 export interface Sessao {
   idToken: string;
@@ -45,7 +47,14 @@ export function sessaoDeTokens(t: Tokens, agora = Date.now()): Sessao {
 
 function armazenamento(): Storage | null {
   try {
-    return window.sessionStorage;
+    const st = window.localStorage;
+    // Migra a sessão das versões que guardavam no sessionStorage.
+    const antiga = window.sessionStorage.getItem(CHAVE);
+    if (antiga) {
+      if (!st.getItem(CHAVE)) st.setItem(CHAVE, antiga);
+      window.sessionStorage.removeItem(CHAVE);
+    }
+    return st;
   } catch {
     return null;
   }
@@ -103,8 +112,9 @@ export function criarGerenciador(
           g.salvar(nova);
           return nova;
         })
-        .catch(() => {
-          g.salvar(null);
+        .catch((e: unknown) => {
+          // Sem internet (app aberto offline): mantém a sessão para tentar de novo depois.
+          if (!(e instanceof ErroCognito && e.codigo === 'SemConexao')) g.salvar(null);
           return null;
         })
         .finally(() => {

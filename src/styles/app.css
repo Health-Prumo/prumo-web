@@ -173,6 +173,29 @@ button:disabled {
   min-height: 44px;
 }
 
+/* ---------- aviso de atualização do app ---------- */
+.aviso-atualizacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--verde-100);
+  border: 1px solid var(--verde-700);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  color: var(--cor-esmeralda);
+}
+.aviso-atualizacao p {
+  margin: 4px 0 0;
+}
+.aviso-atualizacao-acoes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 /* ---------- aviso médico ---------- */
 .aviso-medico {
   font-size: 12px;

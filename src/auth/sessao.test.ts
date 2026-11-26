@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { Cognito } from './cognito';
+import { ErroCognito, type Cognito } from './cognito';
 import { criarGerenciador, lerJwt, sessaoDeTokens, sessaoLocal } from './sessao';
 
 function jwt(payload: Record<string, unknown>): string {
@@ -15,7 +15,10 @@ function cognitoFalso(renovar = vi.fn()): Cognito {
   return { renovar } as unknown as Cognito;
 }
 
-beforeEach(() => sessionStorage.clear());
+beforeEach(() => {
+  sessionStorage.clear();
+  localStorage.clear();
+});
 
 describe('lerJwt', () => {
   it('lê claims com acentos', () => {
@@ -32,7 +35,7 @@ describe('gerenciador de sessão', () => {
     expect(await g.token()).toBe('local-dev');
   });
 
-  it('usa o id token enquanto válido e guarda só no sessionStorage', async () => {
+  it('usa o id token enquanto válido e guarda no localStorage', async () => {
     const id = jwt({ exp: Math.floor(Date.now() / 1000) + 3600, name: 'Ana', email: 'a@x.com' });
     const s = sessaoDeTokens({
       idToken: id,
@@ -46,8 +49,12 @@ describe('gerenciador de sessão', () => {
     g.salvar(s);
     expect(await g.token()).toBe(id);
     expect(renovar).not.toHaveBeenCalled();
-    expect(sessionStorage.getItem('prumo.sessao')).toContain('"nome":"Ana"');
-    expect(localStorage.length).toBe(0);
+    expect(localStorage.getItem('prumo.sessao')).toContain('"nome":"Ana"');
+    expect(sessionStorage.length).toBe(0);
+    // Um gerenciador novo (app reaberto) encontra a mesma sessão.
+    expect(criarGerenciador('cognito', cognitoFalso()).atual()?.nome).toBe('Ana');
+    g.salvar(null);
+    expect(localStorage.getItem('prumo.sessao')).toBeNull();
   });
 
   it('renova uma vez só quando o token vence', async () => {
@@ -78,5 +85,24 @@ describe('gerenciador de sessão', () => {
     );
     expect(await g.token()).toBeNull();
     expect(g.atual()).toBeNull();
+  });
+
+  it('migra a sessão antiga do sessionStorage', () => {
+    sessionStorage.setItem('prumo.sessao', JSON.stringify(sessaoLocal()));
+    const g = criarGerenciador('local', cognitoFalso());
+    expect(g.atual()?.idToken).toBe('local-dev');
+    expect(sessionStorage.getItem('prumo.sessao')).toBeNull();
+    expect(localStorage.getItem('prumo.sessao')).not.toBeNull();
+  });
+
+  it('mantém a sessão se a renovação falhar por falta de conexão', async () => {
+    const velho = jwt({ exp: Math.floor(Date.now() / 1000) - 10 });
+    const erro = new ErroCognito('SemConexao', 'sem rede');
+    const g = criarGerenciador('cognito', cognitoFalso(vi.fn().mockRejectedValue(erro)));
+    g.salvar(
+      sessaoDeTokens({ idToken: velho, accessToken: 'ac', refreshToken: 're', expiraEmSeg: 0 }),
+    );
+    expect(await g.token()).toBeNull();
+    expect(g.atual()?.refreshToken).toBe('re');
   });
 });

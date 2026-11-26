@@ -9,7 +9,8 @@ Front-end do **Prumo**, o coach de bem-estar com IA que responde "como estou hoj
 Esqueleto funcional do Checkpoint 2, seguindo o contrato da API v1 (rotas e tipos em `src/api/tipos.ts` e `src/api/cliente.ts`):
 
 - Telas: entrar, cadastro com código, redefinir senha, consentimento LGPD, Hoje, Registrar o dia, Histórico (Recharts, carregado sob demanda), Coach e Perfil (exportar e apagar).
-- Login: `src/auth/` chama o Cognito direto por `fetch`, com renovação automática do token. Tokens só no `sessionStorage`. O header da API leva o **id token**. Com `VITE_AUTH_MODE=local`, não há Cognito e o token é `local-dev`.
+- Login: `src/auth/` chama o Cognito direto por `fetch`, com renovação automática do token. Tokens no `localStorage` (o usuário continua logado ao reabrir o navegador ou o app, até o refresh token vencer, hoje em 30 dias); nenhum dado de saúde fica guardado. Sem internet, a sessão é mantida. O header da API leva o **id token**. Com `VITE_AUTH_MODE=local`, não há Cognito e o token é `local-dev`.
+- App Android: `src/components/AvisoAtualizacao.tsx` mostra o aviso de versão nova quando o `prumo-mobile` injeta o plugin `Atualizacao`. No navegador não aparece.
 - Estilo: tokens copiados em `src/styles/prumo.css` (não edite as cores ali; mude no `prumo` e copie de novo) e o resto em `src/styles/app.css`. Ícones em `src/components/Icone.tsx`. Logo e símbolo em `public/`.
 - Qualidade: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`; o CI roda tudo isso e o `gitleaks`. Dependabot para npm e Actions.
 - Deploy: `scripts/deploy.sh` (S3 + invalidação do CloudFront) para `https://app.healthprumo.online`.

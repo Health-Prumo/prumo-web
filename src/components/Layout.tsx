@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { primeiroNome } from '../util/formato';
+import { AvisoAtualizacao } from './AvisoAtualizacao';
 import { AvisoMedico } from './Estado';
 import { Icone, type NomeIcone } from './Icone';
 import { definirIconesDaBarra } from '../util/barrasDoSistema';
@@ -62,6 +63,7 @@ export function Layout() {
       </aside>
 
       <main id="conteudo" className="principal" tabIndex={-1}>
+        <AvisoAtualizacao />
         <Outlet />
         <AvisoMedico className="rodape-aviso" />
       </main>
